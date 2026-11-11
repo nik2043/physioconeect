@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><text y=%27.9em%27 font-size=%2790%27>🧠</text></svg>">
+<title>PhysioConnect – AI-Powered Physiotherapy Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0A9688;
+    --teal-dark: #00695C;
+    --teal-light: #E0F2F1;
+    --mint: #26C6A2;
+    --navy: #0D1B2A;
+    --navy-mid: #1A2E42;
+    --white: #FFFFFF;
+    --off-white: #F7FFFE;
+    --gray: #6B7B8D;
+    --light-gray: #EEF2F5;
+    --accent: #FF6B6B;
+    --gold: #FFB347;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'DM Sans',sans-serif; background:var(--white); color:var(--navy); overflow-x:hidden; }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 60px;
+    background:rgba(255,255,255,0.95); backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(10,150,136,0.1);
+    box-shadow:0 2px 20px rgba(0,0,0,0.05);
+  }
+  .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.5rem; color:var(--teal-dark); display:flex; align-items:center; gap:10px; cursor:pointer; }
+  .logo-icon { width:36px; height:36px; background:linear-gradient(135deg,var(--teal),var(--mint)); border-radius:10px; display:flex; align-items:center; justify-content:center; color:white; font-size:18px; }
+  .nav-links { display:flex; gap:36px; list-style:none; }
+  .nav-links a { font-size:0.9rem; font-weight:500; color:var(--navy-mid); text-decoration:none; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--teal); }
+  .nav-right { display:flex; align-items:center; gap:12px; }
+  .nav-cta { background:linear-gradient(135deg,var(--teal),var(--mint)); color:white; border:none; padding:10px 24px; border-radius:50px; font-family:'DM Sans',sans-serif; font-weight:500; font-size:0.9rem; cursor:pointer; transition:transform 0.2s, box-shadow 0.2s; }
+  .nav-cta:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(10,150,136,0.35); }
+  .nav-login { background:transparent; border:1.5px solid var(--teal); color:var(--teal-dark); padding:9px 20px; border-radius:50px; font-family:'DM Sans',sans-serif; font-weight:500; font-size:0.9rem; cursor:pointer; transition:all 0.2s; }
+  .nav-login:hover { background:var(--teal-light); }
+
+  /* HERO */
+  .hero { min-height:100vh; display:flex; align-items:center; padding:120px 60px 80px; background:linear-gradient(160deg,#F7FFFE 0%,#E0F2F1 40%,#B2DFDB 100%); position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; right:-100px; top:-100px; width:700px; height:700px; background:radial-gradient(circle,rgba(38,198,162,0.15) 0%,transparent 70%); border-radius:50%; animation:pulse 6s ease-in-out infinite; }
+  .hero::after { content:''; position:absolute; left:-80px; bottom:-100px; width:500px; height:500px; background:radial-gradient(circle,rgba(10,150,136,0.1) 0%,transparent 70%); border-radius:50%; animation:pulse 8s ease-in-out infinite reverse; }
+  @keyframes pulse { 0%,100%{transform:scale(1);opacity:0.7} 50%{transform:scale(1.1);opacity:1} }
+  .hero-content { max-width:600px; position:relative; z-index:2; animation:slideUp 0.8s ease-out; }
+  @keyframes slideUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+  .hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(10,150,136,0.12); border:1px solid rgba(10,150,136,0.25); color:var(--teal-dark); padding:6px 16px; border-radius:50px; font-size:0.82rem; font-weight:500; margin-bottom:28px; }
+  .hero-badge span { width:8px; height:8px; border-radius:50%; background:var(--mint); animation:blink 1.5s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  h1 { font-family:'Syne',sans-serif; font-size:clamp(2.4rem,5vw,3.6rem); font-weight:800; line-height:1.15; color:var(--navy); margin-bottom:20px; }
+  h1 em { font-style:normal; background:linear-gradient(135deg,var(--teal),var(--mint)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .hero p { font-size:1.1rem; font-weight:300; color:var(--gray); line-height:1.7; margin-bottom:36px; max-width:500px; }
+  .hero-ctas { display:flex; gap:16px; flex-wrap:wrap; }
+  .btn-primary { padding:14px 32px; border-radius:50px; background:linear-gradient(135deg,var(--teal-dark),var(--teal)); color:white; border:none; font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:500; cursor:pointer; transition:all 0.3s; box-shadow:0 8px 30px rgba(10,150,136,0.3); }
+  .btn-primary:hover { transform:translateY(-3px); box-shadow:0 14px 40px rgba(10,150,136,0.4); }
+  .btn-secondary { padding:14px 32px; border-radius:50px; background:transparent; color:var(--teal-dark); border:2px solid var(--teal); font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:500; cursor:pointer; transition:all 0.3s; }
+  .btn-secondary:hover { background:var(--teal-light); }
+
+  .hero-visual { position:absolute; right:60px; top:50%; transform:translateY(-50%); width:460px; animation:floatCard 4s ease-in-out infinite; z-index:2; }
+  @keyframes floatCard { 0%,100%{transform:translateY(-50%)} 50%{transform:translateY(calc(-50% - 14px))} }
+  .ai-card { background:white; border-radius:24px; padding:28px; box-shadow:0 30px 80px rgba(13,27,42,0.15); margin-bottom:16px; }
+  .ai-card-header { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+  .ai-icon { width:42px; height:42px; border-radius:12px; background:linear-gradient(135deg,var(--teal),var(--mint)); display:flex; align-items:center; justify-content:center; font-size:20px; }
+  .ai-card-header h3 { font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; }
+  .ai-card-header p { font-size:0.78rem; color:var(--gray); }
+  .match-list { display:flex; flex-direction:column; gap:10px; }
+  .match-item { display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:14px; background:var(--off-white); cursor:pointer; transition:all 0.2s; border:1.5px solid transparent; }
+  .match-item:first-child { background:var(--teal-light); border-color:var(--teal); }
+  .match-item:hover { border-color:var(--teal); }
+  .match-avatar { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:700; color:white; flex-shrink:0; }
+  .match-info { flex:1; }
+  .match-info h4 { font-size:0.88rem; font-weight:600; }
+  .match-info p { font-size:0.75rem; color:var(--gray); }
+  .match-score { font-family:'Syne',sans-serif; font-size:0.85rem; font-weight:700; color:var(--teal-dark); }
+  .mini-card { background:white; border-radius:16px; padding:16px 20px; box-shadow:0 20px 60px rgba(13,27,42,0.1); display:flex; align-items:center; gap:14px; }
+  .mini-icon { font-size:24px; }
+  .mini-card p { font-size:0.8rem; color:var(--gray); }
+  .mini-card strong { display:block; font-size:0.9rem; color:var(--navy); }
+
+  /* STATS */
+  .stats-bar { background:var(--navy); padding:32px 60px; display:flex; justify-content:space-around; align-items:center; flex-wrap:wrap; gap:20px; }
+  .stat-item { text-align:center; color:white; }
+  .stat-number { font-family:'Syne',sans-serif; font-size:2.2rem; font-weight:800; background:linear-gradient(135deg,var(--mint),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .stat-label { font-size:0.82rem; color:rgba(255,255,255,0.6); margin-top:4px; }
+
+  /* HOW IT WORKS */
+  section { padding:100px 60px; }
+  .section-label { font-size:0.82rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:12px; }
+  .section-title { font-family:'Syne',sans-serif; font-size:clamp(1.8rem,3vw,2.5rem); font-weight:800; color:var(--navy); margin-bottom:16px; }
+  .section-sub { font-size:1rem; color:var(--gray); max-width:480px; line-height:1.7; margin-bottom:60px; }
+  .steps-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:28px; }
+  .step-card { padding:32px 28px; border-radius:20px; background:var(--off-white); border:1px solid var(--teal-light); transition:all 0.3s; position:relative; overflow:hidden; }
+  .step-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--teal),var(--mint)); transform:scaleX(0); transition:transform 0.3s; }
+  .step-card:hover::before { transform:scaleX(1); }
+  .step-card:hover { box-shadow:0 20px 50px rgba(10,150,136,0.12); transform:translateY(-4px); }
+  .step-num { font-family:'Syne',sans-serif; font-size:3rem; font-weight:800; color:var(--teal-light); line-height:1; margin-bottom:12px; }
+  .step-emoji { font-size:2rem; margin-bottom:14px; display:block; }
+  .step-card h3 { font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; margin-bottom:10px; }
+  .step-card p { font-size:0.88rem; color:var(--gray); line-height:1.6; }
+
+  /* AI FEATURES */
+  .features-section { background:var(--navy); }
+  .features-section .section-title { color:white; }
+  .features-section .section-label { color:var(--mint); }
+  .features-section .section-sub { color:rgba(255,255,255,0.6); }
+  .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:24px; }
+  .feature-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:32px; transition:all 0.3s; }
+  .feature-card:hover { background:rgba(38,198,162,0.1); border-color:rgba(38,198,162,0.3); transform:translateY(-4px); }
+  .feature-icon { width:54px; height:54px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:20px; }
+  .feature-card h3 { color:white; font-family:'Syne',sans-serif; font-size:1.15rem; font-weight:700; margin-bottom:10px; }
+  .feature-card p { color:rgba(255,255,255,0.55); font-size:0.88rem; line-height:1.65; }
+  .feature-tag { display:inline-block; margin-top:16px; padding:4px 12px; border-radius:50px; font-size:0.75rem; font-weight:600; letter-spacing:0.5px; }
+
+  /* PRICING */
+  .pricing-compare { display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:740px; margin:0 auto; }
+  .price-card { border-radius:24px; padding:36px; text-align:center; position:relative; }
+  .price-card.old { background:var(--light-gray); border:1px solid #ddd; opacity:0.7; }
+  .price-card.new { background:linear-gradient(145deg,var(--teal-dark),var(--teal)); color:white; box-shadow:0 30px 70px rgba(10,150,136,0.3); }
+  .price-label { font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
+  .price-amount { font-family:'Syne',sans-serif; font-size:3rem; font-weight:800; margin:16px 0; }
+  .price-card.old .price-label { color:var(--gray); }
+  .price-card.new .price-label { color:rgba(255,255,255,0.7); }
+  .price-tag { font-size:0.88rem; color:var(--gray); }
+  .price-card.new .price-tag { color:rgba(255,255,255,0.75); }
+  .price-breakdown { margin-top:20px; text-align:left; }
+  .price-row { display:flex; justify-content:space-between; padding:8px 0; font-size:0.85rem; border-bottom:1px solid rgba(255,255,255,0.1); }
+  .price-card.old .price-row { border-bottom-color:#e0e0e0; }
+  .vs-badge { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); background:var(--accent); color:white; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:800; font-size:0.85rem; z-index:5; box-shadow:0 4px 16px rgba(255,107,107,0.4); }
+  .pricing-wrapper { position:relative; }
+
+  /* SYMPTOM CHECKER */
+  .checker-section { background:linear-gradient(135deg,#E0F2F1 0%,#F7FFFE 100%); }
+  .checker-demo { background:white; border-radius:28px; padding:40px; max-width:600px; margin:0 auto; box-shadow:0 30px 80px rgba(0,0,0,0.08); }
+  .checker-demo h3 { font-family:'Syne',sans-serif; font-size:1.2rem; font-weight:700; margin-bottom:6px; }
+  .checker-demo > p { font-size:0.85rem; color:var(--gray); margin-bottom:28px; }
+  .symptom-tags { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:24px; }
+  .tag { padding:8px 16px; border-radius:50px; font-size:0.82rem; cursor:pointer; transition:all 0.2s; border:1.5px solid var(--teal-light); background:var(--off-white); color:var(--navy-mid); user-select:none; }
+  .tag.active,.tag:hover { background:var(--teal); color:white; border-color:var(--teal); }
+  .custom-symptom-row { display:flex; gap:8px; margin-bottom:16px; }
+  .custom-symptom-input { flex:1; padding:10px 16px; border:1.5px solid var(--teal-light); border-radius:50px; font-family:'DM Sans',sans-serif; font-size:0.85rem; outline:none; transition:border-color 0.2s; }
+  .custom-symptom-input:focus { border-color:var(--teal); }
+  .custom-symptom-btn { padding:10px 18px; border-radius:50px; background:var(--teal-light); border:none; color:var(--teal-dark); font-family:'DM Sans',sans-serif; font-weight:500; cursor:pointer; font-size:0.85rem; transition:all 0.2s; white-space:nowrap; }
+  .custom-symptom-btn:hover { background:var(--teal); color:white; }
+  .analyse-btn { width:100%; padding:14px; border-radius:14px; background:linear-gradient(135deg,var(--teal-dark),var(--teal)); color:white; border:none; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:500; cursor:pointer; transition:all 0.3s; margin-top:16px; position:relative; }
+  .analyse-btn:hover { box-shadow:0 8px 24px rgba(10,150,136,0.35); }
+  .analyse-btn:disabled { opacity:0.6; cursor:not-allowed; }
+  .ai-result { background:var(--navy); border-radius:18px; padding:24px; color:white; display:none; animation:fadeIn 0.4s ease; }
+  .ai-result.show { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+  .result-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.08); font-size:0.85rem; }
+  .result-row:last-child { border:none; }
+  .result-label { color:rgba(255,255,255,0.55); }
+  .result-val { color:white; font-weight:500; max-width:260px; text-align:right; }
+  .result-val.urgent { color:var(--gold); }
+  .ai-narrative { margin-top:16px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.08); font-size:0.84rem; color:rgba(255,255,255,0.65); line-height:1.6; }
+  .ai-narrative strong { color:rgba(255,255,255,0.9); }
+  .ai-disclaimer { margin-top:12px; font-size:0.75rem; color:rgba(255,255,255,0.35); font-style:italic; }
+
+  /* BOOKING */
+  .booking-section { background:linear-gradient(135deg,var(--teal-dark) 0%,var(--navy) 100%); text-align:center; }
+  .booking-section .section-title { color:white; }
+  .booking-section .section-sub { color:rgba(255,255,255,0.6); margin:0 auto 40px; }
+  .booking-form { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:24px; padding:40px; max-width:680px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .form-group { text-align:left; }
+  .form-group label { display:block; font-size:0.8rem; color:rgba(255,255,255,0.6); margin-bottom:8px; }
+  .form-group select,.form-group input { width:100%; padding:12px 16px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:12px; color:white; font-family:'DM Sans',sans-serif; font-size:0.9rem; outline:none; transition:border-color 0.2s; }
+  .form-group select option { background:var(--navy-mid); }
+  .form-group select:focus,.form-group input:focus { border-color:var(--mint); }
+  .form-group input::placeholder { color:rgba(255,255,255,0.3); }
+  .form-full { grid-column:1/-1; }
+  .find-btn { grid-column:1/-1; padding:16px; border-radius:14px; background:linear-gradient(135deg,var(--mint),var(--teal)); color:white; border:none; font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:600; cursor:pointer; transition:all 0.3s; box-shadow:0 8px 30px rgba(38,198,162,0.3); position:relative; }
+  .find-btn:hover { transform:translateY(-2px); box-shadow:0 14px 40px rgba(38,198,162,0.4); }
+  .find-btn:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+
+  /* MATCH RESULTS PANEL */
+  .match-results-panel { display:none; margin-top:32px; max-width:680px; margin-left:auto; margin-right:auto; animation:fadeIn 0.5s ease; }
+  .match-results-panel.show { display:block; }
+  .match-results-panel h3 { color:white; font-family:'Syne',sans-serif; font-size:1.2rem; margin-bottom:16px; }
+  .physio-card { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:20px; padding:24px; margin-bottom:12px; display:flex; align-items:flex-start; gap:16px; transition:all 0.3s; text-align:left; }
+  .physio-card:hover { background:rgba(255,255,255,0.12); border-color:rgba(38,198,162,0.4); }
+  .physio-card:first-child { border-color:var(--mint); background:rgba(38,198,162,0.12); }
+  .physio-avatar { width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:700; color:white; flex-shrink:0; }
+  .physio-info { flex:1; }
+  .physio-name { font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; color:white; margin-bottom:4px; }
+  .physio-meta { font-size:0.82rem; color:rgba(255,255,255,0.6); margin-bottom:8px; }
+  .physio-score { font-family:'Syne',sans-serif; font-size:1.4rem; font-weight:800; color:var(--mint); }
+  .physio-score span { font-size:0.75rem; color:rgba(255,255,255,0.5); font-family:'DM Sans',sans-serif; font-weight:400; }
+  .physio-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+  .physio-tag { padding:3px 10px; border-radius:50px; font-size:0.72rem; background:rgba(38,198,162,0.2); color:var(--mint); border:1px solid rgba(38,198,162,0.3); }
+  .book-btn { padding:10px 20px; border-radius:50px; background:linear-gradient(135deg,var(--mint),var(--teal)); color:white; border:none; font-family:'DM Sans',sans-serif; font-size:0.85rem; font-weight:500; cursor:pointer; white-space:nowrap; flex-shrink:0; transition:all 0.2s; }
+  .book-btn:hover { transform:translateY(-2px); box-shadow:0 6px 16px rgba(38,198,162,0.4); }
+  .ai-match-insight { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:20px; margin-top:16px; font-size:0.85rem; color:rgba(255,255,255,0.65); line-height:1.7; }
+  .ai-match-insight strong { color:var(--mint); }
+
+  /* MODAL */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(13,27,42,0.7); z-index:200; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
+  .modal-overlay.show { display:flex; }
+  .modal { background:white; border-radius:24px; padding:40px; max-width:500px; width:90%; max-height:90vh; overflow-y:auto; position:relative; animation:modalIn 0.3s ease; }
+  @keyframes modalIn { from{opacity:0;transform:scale(0.9) translateY(20px)} to{opacity:1;transform:scale(1) translateY(0)} }
+  .modal-close { position:absolute; top:16px; right:16px; width:32px; height:32px; border-radius:50%; background:var(--light-gray); border:none; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:background 0.2s; }
+  .modal-close:hover { background:#ddd; }
+  .modal h2 { font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:800; margin-bottom:8px; color:var(--navy); }
+  .modal p.sub { font-size:0.88rem; color:var(--gray); margin-bottom:28px; }
+  .modal-tabs { display:flex; gap:4px; background:var(--light-gray); padding:4px; border-radius:12px; margin-bottom:24px; }
+  .modal-tab { flex:1; padding:10px; border-radius:10px; border:none; background:transparent; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:500; cursor:pointer; color:var(--gray); transition:all 0.2s; }
+  .modal-tab.active { background:white; color:var(--navy); box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+  .modal-field { margin-bottom:16px; }
+  .modal-field label { display:block; font-size:0.8rem; font-weight:500; color:var(--gray); margin-bottom:6px; }
+  .modal-field input { width:100%; padding:12px 16px; border:1.5px solid var(--light-gray); border-radius:12px; font-family:'DM Sans',sans-serif; font-size:0.9rem; outline:none; transition:border-color 0.2s; color:var(--navy); }
+  .modal-field input:focus { border-color:var(--teal); }
+  .modal-submit { width:100%; padding:14px; border-radius:14px; background:linear-gradient(135deg,var(--teal-dark),var(--teal)); color:white; border:none; font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:500; cursor:pointer; transition:all 0.3s; box-shadow:0 8px 24px rgba(10,150,136,0.25); }
+  .modal-submit:hover { transform:translateY(-2px); }
+  .modal-submit:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+  .modal-msg { text-align:center; padding:20px; border-radius:12px; font-size:0.9rem; margin-top:12px; }
+  .modal-msg.success { background:var(--teal-light); color:var(--teal-dark); }
+  .modal-msg.error { background:#FFEBEB; color:#C0392B; }
+
+  /* TOAST */
+  .toast { position:fixed; bottom:30px; right:30px; z-index:300; background:var(--navy); color:white; padding:14px 22px; border-radius:14px; font-size:0.9rem; transform:translateY(100px); opacity:0; transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); max-width:340px; box-shadow:0 10px 40px rgba(0,0,0,0.3); }
+  .toast.show { transform:translateY(0); opacity:1; }
+  .toast.success { border-left:4px solid var(--mint); }
+  .toast.error { border-left:4px solid var(--accent); }
+
+  /* LOADING DOTS */
+  .loading-dots { display:inline-flex; gap:4px; align-items:center; }
+  .loading-dots span { width:6px; height:6px; border-radius:50%; background:currentColor; animation:dot 1.2s infinite; }
+  .loading-dots span:nth-child(2){animation-delay:0.2s}
+  .loading-dots span:nth-child(3){animation-delay:0.4s}
+  @keyframes dot{0%,60%,100%{transform:scale(0.7);opacity:0.4}30%{transform:scale(1);opacity:1}}
+
+  /* USER MENU */
+  .user-badge { display:flex; align-items:center; gap:8px; padding:8px 16px; border-radius:50px; background:var(--teal-light); cursor:pointer; font-size:0.88rem; font-weight:500; color:var(--teal-dark); transition:all 0.2s; border:none; font-family:'DM Sans',sans-serif; }
+  .user-badge:hover { background:#B2DFDB; }
+  .user-avatar-small { width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,var(--teal),var(--mint)); display:flex; align-items:center; justify-content:center; color:white; font-size:12px; font-weight:700; }
+
+  /* FOOTER */
+  footer { background:var(--navy); color:rgba(255,255,255,0.5); text-align:center; padding:40px 60px; font-size:0.85rem; }
+  footer strong { color:var(--mint); }
+
+  /* SCROLL FADE */
+  .fade-in { opacity:0; transform:translateY(20px); transition:opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity:1; transform:translateY(0); }
+
+  @media(max-width:900px){
+    nav{padding:16px 24px}
+    .nav-links{display:none}
+    section,.hero{padding:80px 24px}
+    .hero-visual{display:none}
+    .stats-bar{padding:24px}
+    .pricing-compare{grid-template-columns:1fr}
+    .booking-form{grid-template-columns:1fr}
+    footer{padding:32px 24px}
+  }
+
+:root{color-scheme:light}html,body{background:#fff}
+nav{padding-top:calc(18px + env(safe-area-inset-top,0px))}
+.burger{display:none;background:none;border:0;font-size:1.6rem;cursor:pointer;color:var(--navy)}
+.nav-links a.active{color:var(--teal)}
+.wrap{max-width:1100px;margin:0 auto}
+.dir-controls{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:32px}
+.dir-controls input,.dir-controls select{padding:12px 18px;border:1.5px solid var(--light-gray);border-radius:50px;font:inherit;font-size:.9rem;outline:none;background:#fff;color:var(--navy)}
+.dir-controls input{min-width:260px}.dir-controls input:focus,.dir-controls select:focus{border-color:var(--teal)}
+.dir-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.pcard{background:#fff;border:1px solid var(--light-gray);border-radius:20px;padding:24px;box-shadow:0 6px 24px rgba(13,27,42,.05);transition:.3s;position:relative;text-align:left}
+.pcard:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(10,150,136,.15)}
+.pcard .physio-avatar{margin-bottom:12px}.pcard h4{font-family:'Syne',sans-serif;font-size:1.05rem}
+.pcard .m{font-size:.82rem;color:var(--gray);margin:4px 0 10px}.pcard .bio{font-size:.85rem;color:var(--gray);line-height:1.6;margin-bottom:12px}
+.pcard .physio-tag{background:var(--teal-light);color:var(--teal-dark);border-color:transparent}
+.pcard .row{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+.price{font-family:'Syne',sans-serif;font-weight:800;color:var(--teal-dark)}.price small{font-weight:400;color:var(--gray);font-family:'DM Sans'}
+.fav{position:absolute;top:18px;right:18px;background:none;border:0;font-size:1.3rem;cursor:pointer;color:#ccc}.fav.on{color:var(--accent)}
+.empty{grid-column:1/-1;text-align:center;color:var(--gray);padding:40px}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.tcard{background:var(--off-white);border:1px solid var(--teal-light);border-radius:20px;padding:26px;font-size:.92rem;line-height:1.7;color:var(--navy-mid)}
+.tcard b{display:block;margin-top:14px;font-family:'Syne',sans-serif;color:var(--teal-dark)}
+.faq{max-width:760px;margin:0 auto}.faq details{border:1px solid var(--light-gray);border-radius:14px;padding:18px 22px;margin-bottom:12px;background:#fff}
+.faq summary{cursor:pointer;font-weight:600;font-family:'Syne',sans-serif;list-style:none}.faq summary::after{content:'+';float:right;color:var(--teal)}
+.faq details[open] summary::after{content:'–'}.faq p{margin-top:12px;font-size:.9rem;color:var(--gray);line-height:1.7}
+.cform{max-width:620px;margin:0 auto;display:grid;gap:14px;text-align:left}
+.cform input,.cform textarea{width:100%;padding:14px 18px;border:1.5px solid var(--light-gray);border-radius:14px;font:inherit;font-size:.92rem;outline:none;color:var(--navy)}
+.cform input:focus,.cform textarea:focus{border-color:var(--teal)}.cform textarea{min-height:120px;resize:vertical}
+.bk{border:1px solid var(--light-gray);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:.85rem}
+.bk b{display:block;font-size:.95rem}.bk .st{font-size:.72rem;padding:2px 10px;border-radius:50px;background:var(--teal-light);color:var(--teal-dark)}.bk .st.x{background:#FFEBEB;color:#C0392B}
+.bk button{border:1px solid #f3c5c5;background:#fff;color:#C0392B;border-radius:50px;padding:6px 14px;cursor:pointer;font:inherit;font-size:.78rem}
+.dash h3{font-family:'Syne',sans-serif;font-size:1rem;margin:22px 0 10px}.dash input[type=range]{width:100%;accent-color:var(--teal)}
+.linkbtn{background:none;border:0;color:var(--accent);cursor:pointer;font:inherit;font-size:.85rem;margin-top:18px}
+footer .flinks{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:14px}footer .flinks a{color:rgba(255,255,255,.7);text-decoration:none}footer .flinks a:hover{color:var(--mint)}
+@media(max-width:900px){.burger{display:block}.nav-links.open{display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:#fff;padding:20px 24px;gap:16px;box-shadow:0 12px 24px rgba(0,0,0,.08)}.nav-right{gap:6px}.nav-cta{display:none}}
+</style>
+</head>
+<body>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuthModal()">×</button>
+    <h2>Welcome Back 👋</h2>
+    <p class="sub">Sign in to book sessions and track your recovery.</p>
+    <div class="modal-tabs">
+      <button class="modal-tab active" onclick="switchTab('login')">Sign In</button>
+      <button class="modal-tab" onclick="switchTab('register')">Register</button>
+    </div>
+    <div id="loginForm">
+      <div class="modal-field"><label>Email</label><input type="email" id="loginEmail" placeholder="you@example.com"></div>
+      <div class="modal-field"><label>Password</label><input type="password" id="loginPass" placeholder="••••••••"></div>
+      <button class="modal-submit" onclick="handleLogin()">Sign In →</button>
+      <p style="text-align:center;margin-top:12px;font-size:0.8rem;color:var(--gray)">Demo: <strong>demo@physioconnect.in</strong> / <strong>Demo@1234</strong></p>
+    </div>
+    <div id="registerForm" style="display:none">
+      <div class="modal-field"><label>Full Name</label><input type="text" id="regName" placeholder="Dr. / Mr. / Ms."></div>
+      <div class="modal-field"><label>Email</label><input type="email" id="regEmail" placeholder="you@example.com"></div>
+      <div class="modal-field"><label>Password</label><input type="password" id="regPass" placeholder="Min. 6 characters"></div>
+      <div class="modal-field"><label>City</label><input type="text" id="regCity" placeholder="Delhi, Mumbai…"></div>
+      <button class="modal-submit" onclick="handleRegister()">Create Account →</button>
+    </div>
+    <div id="authMsg"></div>
+  </div>
+</div>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="bookModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeBookModal()">×</button>
+    <h2>Book a Session 📅</h2>
+    <p class="sub" id="bookingPhysioName">Select your preferred slot</p>
+    <div class="modal-field"><label>Date</label><input type="date" id="bookDate"></div>
+    <div class="modal-field"><label>Time Slot</label>
+      <select id="bookTime" style="width:100%;padding:12px 16px;border:1.5px solid var(--light-gray);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;color:var(--navy)">
+        <option value="09:00">9:00 AM</option>
+        <option value="10:00">10:00 AM</option>
+        <option value="11:00">11:00 AM</option>
+        <option value="14:00">2:00 PM</option>
+        <option value="15:00">3:00 PM</option>
+        <option value="17:00">5:00 PM</option>
+      </select>
+    </div>
+    <div class="modal-field"><label>Session Type</label>
+      <select id="bookType" style="width:100%;padding:12px 16px;border:1.5px solid var(--light-gray);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;color:var(--navy)">
+        <option value="home_visit">🏠 Home Visit</option>
+        <option value="online">💻 Online / Video</option>
+      </select>
+    </div>
+    <div class="modal-field"><label>Notes (optional)</label><input type="text" id="bookNotes" placeholder="Describe your condition briefly…"></div>
+    <button class="modal-submit" id="bookSubmitBtn" onclick="submitBooking()">Confirm Booking ✅</button>
+    <div id="bookMsg"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="modal-overlay" id="dashModal"><div class="modal dash">
+  <button class="modal-close" onclick="closeDash()">×</button>
+  <h2 id="dashName">My Dashboard</h2><p class="sub" id="dashEmail"></p>
+  <h3>📅 My Bookings</h3><div id="dashBookings"></div>
+  <h3>📈 Recovery Tracker</h3>
+  <label style="font-size:.85rem;color:var(--gray)">Today's pain level: <b id="painVal">5</b>/10</label>
+  <input type="range" id="painRange" min="1" max="10" value="5" oninput="painVal.textContent=this.value">
+  <button class="modal-submit" style="margin-top:12px" onclick="savePain()">Log Today</button>
+  <div id="painChart" style="margin-top:14px"></div>
+  <button class="linkbtn" onclick="closeDash();logout()">Sign out</button>
+</div></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <div class="logo-icon">🧠</div>
+    PhysioConnect
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#ai-features">AI Features</a></li>
+    <li><a href="#checker">Symptom Check</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#physios">Physios</a></li>
+    <li><a href="#book">Book Session</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="burger" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+    <div id="authArea">
+      <button class="nav-login" onclick="openAuthModal()">Sign In</button>
+      <button class="nav-cta" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Find a Physio →</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge"><span></span> AI-Powered Healthcare Marketplace</div>
+    <h1>Smart Physio Care,<br><em>Right at Your Door</em></h1>
+    <p>PhysioConnect uses AI to instantly match you with the best physiotherapist for your needs — home visits, online sessions, and rehab support at a fraction of the traditional cost.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Book a Session</button>
+      <button class="btn-secondary" onclick="document.getElementById('checker').scrollIntoView({behavior:'smooth'})">Try Symptom Checker</button>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="ai-card">
+      <div class="ai-card-header">
+        <div class="ai-icon">🤖</div>
+        <div><h3>AI Matching Results</h3><p>Based on: Back Pain · Delhi · ₹800 budget</p></div>
+      </div>
+      <div class="match-list">
+        <div class="match-item"><div class="match-avatar" style="background:linear-gradient(135deg,#0A9688,#26C6A2)">R</div><div class="match-info"><h4>Dr. Riya Sharma</h4><p>Spine Specialist · 2.4 km · ⭐ 4.9</p></div><div class="match-score">98%</div></div>
+        <div class="match-item"><div class="match-avatar" style="background:linear-gradient(135deg,#1A2E42,#0A9688)">A</div><div class="match-info"><h4>Dr. Arjun Mehra</h4><p>Sports Rehab · 3.1 km · ⭐ 4.7</p></div><div class="match-score">91%</div></div>
+        <div class="match-item"><div class="match-avatar" style="background:linear-gradient(135deg,#26C6A2,#FFB347)">P</div><div class="match-info"><h4>Dr. Pooja Gupta</h4><p>Neuro Rehab · 4.0 km · ⭐ 4.8</p></div><div class="match-score">87%</div></div>
+      </div>
+    </div>
+    <div class="mini-card"><div class="mini-icon">💰</div><div><strong>Platform Commission Only ₹80–100</strong><p>No middlemen. You save ₹200+ per session.</p></div></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-number">500+</div><div class="stat-label">Verified Physiotherapists</div></div>
+  <div class="stat-item"><div class="stat-number">₹80</div><div class="stat-label">Min. Platform Fee</div></div>
+  <div class="stat-item"><div class="stat-number">3s</div><div class="stat-label">AI Matching Time</div></div>
+  <div class="stat-item"><div class="stat-number">98%</div><div class="stat-label">Patient Satisfaction</div></div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="section-label">Process</div>
+  <div class="section-title">How PhysioConnect Works</div>
+  <p class="section-sub">From symptom to recovery — our AI guides every step of your physiotherapy journey.</p>
+  <div class="steps-grid">
+    <div class="step-card fade-in"><span class="step-emoji">📋</span><div class="step-num">01</div><h3>Enter Your Details</h3><p>Share your injury type, location, budget, and preferred session format (home/online).</p></div>
+    <div class="step-card fade-in"><span class="step-emoji">🧠</span><div class="step-num">02</div><h3>AI Symptom Check</h3><p>Our AI analyzes your symptoms and suggests the likely condition, therapy type, and urgency level.</p></div>
+    <div class="step-card fade-in"><span class="step-emoji">🎯</span><div class="step-num">03</div><h3>Smart Matching</h3><p>AI instantly matches you with the top 3 physiotherapists based on specialization, distance, and reviews.</p></div>
+    <div class="step-card fade-in"><span class="step-emoji">📅</span><div class="step-num">04</div><h3>Book &amp; Connect</h3><p>Choose your physio, book a slot, and connect via home visit or video session. Track your recovery.</p></div>
+  </div>
+</section>
+
+<!-- AI FEATURES -->
+<section id="ai-features" class="features-section">
+  <div class="section-label">Intelligence</div>
+  <div class="section-title">Powered by AI at Every Step</div>
+  <p class="section-sub">Three intelligent systems working together for better physiotherapy outcomes.</p>
+  <div class="features-grid">
+    <div class="feature-card fade-in"><div class="feature-icon" style="background:rgba(38,198,162,0.15)">🎯</div><h3>Smart Patient–Physio Matching</h3><p>Our core AI algorithm analyzes specialization, distance, experience, ratings, and real-time availability to instantly surface the top 3 physiotherapists for your specific needs.</p><span class="feature-tag" style="background:rgba(38,198,162,0.15);color:#26C6A2">Core AI Engine</span></div>
+    <div class="feature-card fade-in"><div class="feature-icon" style="background:rgba(255,179,71,0.15)">🩺</div><h3>AI Symptom Checker</h3><p>Before booking, describe your symptoms and get an instant AI assessment — possible condition, recommended therapy, urgency level, and estimated number of sessions required.</p><span class="feature-tag" style="background:rgba(255,179,71,0.15);color:#FFB347">Pre-Consult AI</span></div>
+    <div class="feature-card fade-in"><div class="feature-icon" style="background:rgba(255,107,107,0.15)">💰</div><h3>AI Pricing Model</h3><p>Transparent, fair pricing powered by AI. We eliminate the ₹300 middleman commission, replacing it with a low ₹80–100 platform fee — patients save more, physios earn more.</p><span class="feature-tag" style="background:rgba(255,107,107,0.15);color:#FF6B6B">Fair Pricing</span></div>
+  </div>
+</section>
+
+<!-- SYMPTOM CHECKER -->
+<section id="checker" class="checker-section" style="text-align:center">
+  <div class="section-label">Try It</div>
+  <div class="section-title">AI Symptom Checker</div>
+  <p class="section-sub" style="margin:0 auto 40px">Select your symptoms and let our AI give you a real clinical assessment.</p>
+  <div class="checker-demo">
+    <h3>🩺 What are you experiencing?</h3>
+    <p>Select all that apply — our AI will analyse and suggest next steps</p>
+    <div class="symptom-tags" id="symptomTags">
+      <span class="tag" onclick="toggleTag(this)">Back Pain</span>
+      <span class="tag" onclick="toggleTag(this)">Knee Pain</span>
+      <span class="tag" onclick="toggleTag(this)">Shoulder Stiffness</span>
+      <span class="tag" onclick="toggleTag(this)">Neck Pain</span>
+      <span class="tag" onclick="toggleTag(this)">Post-Surgery</span>
+      <span class="tag" onclick="toggleTag(this)">Stroke Rehab</span>
+      <span class="tag" onclick="toggleTag(this)">Sports Injury</span>
+      <span class="tag" onclick="toggleTag(this)">Limited Mobility</span>
+    </div>
+    <div class="custom-symptom-row">
+      <input class="custom-symptom-input" id="customSymptomInput" placeholder="Describe other symptoms (e.g. wrist pain, numbness…)" onkeydown="if(event.key==='Enter') addCustomSymptom()">
+      <button class="custom-symptom-btn" onclick="addCustomSymptom()">+ Add</button>
+    </div>
+    <button class="analyse-btn" id="analyseBtn" onclick="analyseSymptoms()">🧠 Analyse with AI</button>
+    <div class="ai-result" id="aiResult">
+      <div class="result-row"><span class="result-label">Likely Condition</span><span class="result-val" id="condition">—</span></div>
+      <div class="result-row"><span class="result-label">Recommended Therapy</span><span class="result-val" id="therapy">—</span></div>
+      <div class="result-row"><span class="result-label">Urgency Level</span><span class="result-val urgent" id="urgency">—</span></div>
+      <div class="result-row"><span class="result-label">Est. Sessions</span><span class="result-val" id="sessions">—</span></div>
+      <div class="ai-narrative" id="narrative"></div>
+      <div class="ai-disclaimer" id="disclaimer"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-label">Savings</div>
+  <div class="section-title" style="text-align:center">Fair Pricing Model</div>
+  <p class="section-sub" style="margin:0 auto 60px;text-align:center">See how PhysioConnect puts money back in patients' and physios' pockets.</p>
+  <div class="pricing-wrapper">
+    <div class="pricing-compare">
+      <div class="price-card old">
+        <div class="price-label">Traditional Model</div>
+        <div class="price-amount">₹1000</div>
+        <div class="price-tag">Total patient cost</div>
+        <div class="price-breakdown">
+          <div class="price-row"><span>Doctor/Clinic Fee</span><span>₹700</span></div>
+          <div class="price-row"><span>Middleman Cut</span><span style="color:var(--accent)">₹300 😞</span></div>
+          <div class="price-row"><span>Physio Earns</span><span>₹700</span></div>
+        </div>
+      </div>
+      <div class="price-card new">
+        <div class="price-label">PhysioConnect</div>
+        <div class="price-amount">₹80–100</div>
+        <div class="price-tag">Platform commission only</div>
+        <div class="price-breakdown">
+          <div class="price-row"><span>Patient Pays Direct</span><span>Negotiable</span></div>
+          <div class="price-row"><span>Platform Fee</span><span>₹80–100 ✅</span></div>
+          <div class="price-row"><span>Physio Earns More</span><span>💚 More!</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="vs-badge">VS</div>
+  </div>
+</section>
+
+<!-- PHYSIOS -->
+<section id="physios" style="background:var(--off-white)">
+  <div class="wrap">
+  <div class="section-label" style="text-align:center">Our Network</div>
+  <div class="section-title" style="text-align:center">Browse Verified Physiotherapists</div>
+  <p class="section-sub" style="margin:0 auto 32px;text-align:center">Search, filter and book directly — or save favourites for later.</p>
+  <div class="dir-controls">
+    <input id="dSearch" placeholder="Search name or specialty…" oninput="renderDir()">
+    <select id="dMode" onchange="renderDir()"><option value="">All formats</option><option value="home">🏠 Home visit</option><option value="online">💻 Online</option></select>
+    <select id="dSort" onchange="renderDir()"><option value="rating">Top rated</option><option value="price">Lowest price</option><option value="dist">Nearest</option><option value="fav">Favourites first</option></select>
+  </div>
+  <div class="dir-grid" id="dirGrid"></div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="book" class="booking-section">
+  <div class="section-label" style="color:var(--mint)">Book Now</div>
+  <div class="section-title">Find Your Physiotherapist</div>
+  <p class="section-sub">Enter your details and our AI will match you instantly.</p>
+  <div class="booking-form">
+    <div class="form-group">
+      <label>Injury / Condition</label>
+      <select id="matchCondition">
+        <option>Back Pain</option><option>ACL / Knee</option><option>Stroke Rehabilitation</option>
+        <option>Sports Injury</option><option>Post-Surgery</option><option>Neck / Shoulder</option><option>Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Session Type</label>
+      <select id="matchSession">
+        <option>Home Visit</option><option>Online / Video</option><option>Both (Flexible)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Your Location</label>
+      <input type="text" id="matchLocation" placeholder="Enter city or area…" value="Delhi">
+    </div>
+    <div class="form-group">
+      <label>Budget per Session (₹)</label>
+      <select id="matchBudget">
+        <option>Under ₹500</option><option selected>₹500 – ₹800</option>
+        <option>₹800 – ₹1200</option><option>Flexible</option>
+      </select>
+    </div>
+    <div class="form-group form-full">
+      <label>Preferred Time</label>
+      <select id="matchTime">
+        <option>Morning (7am – 12pm)</option><option>Afternoon (12pm – 5pm)</option>
+        <option>Evening (5pm – 9pm)</option><option>Flexible</option>
+      </select>
+    </div>
+    <button class="find-btn" id="matchBtn" onclick="runAIMatch()">🤖 Match Me with a Physio →</button>
+  </div>
+  <div class="match-results-panel" id="matchResults">
+    <h3>✅ Top Matches for You</h3>
+    <div id="matchCards"></div>
+    <div class="ai-match-insight" id="matchInsight"></div>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section id="join" style="background:linear-gradient(135deg,var(--teal-dark),var(--navy));text-align:center">
+  <div class="section-label" style="color:var(--mint)">For Physiotherapists</div>
+  <div class="section-title" style="color:white">Join the Network</div>
+  <p class="section-sub" style="margin:0 auto 32px;color:rgba(255,255,255,.65)">New graduate or experienced — set your own fee, keep more of it, and get matched with patients.</p>
+  <form class="cform" onsubmit="joinPhysio(event)">
+    <input id="jName" placeholder="Full name (e.g. Dr. Ananya Roy)" required>
+    <select id="jSpec" style="padding:14px 18px;border-radius:14px;border:1.5px solid var(--light-gray);font:inherit"><option value="Spine & Back Care|back,spine,posture">Spine &amp; Back Care</option><option value="Sports & Knee Rehab|sports,acl,knee,ligament">Sports &amp; Knee Rehab</option><option value="Neurological Rehab|stroke,neuro">Neurological Rehab</option><option value="Neck & Shoulder Care|neck,shoulder,cervical">Neck &amp; Shoulder Care</option><option value="Post-Surgery & Geriatric|surgery,geriatric">Post-Surgery &amp; Geriatric</option></select>
+    <input id="jPrice" type="number" min="200" max="3000" placeholder="Your fee per session (₹)" required>
+    <input id="jExp" type="number" min="0" max="40" placeholder="Years of experience" required>
+    <select id="jMode" style="padding:14px 18px;border-radius:14px;border:1.5px solid var(--light-gray);font:inherit"><option value="home,online">Home visit + Online</option><option value="home">Home visit only</option><option value="online">Online only</option></select>
+    <button class="btn-primary" type="submit">Create My Profile →</button>
+  </form>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="reviews">
+  <div class="wrap"><div class="section-label" style="text-align:center">Stories</div>
+  <div class="section-title" style="text-align:center;margin-bottom:40px">Patients Love the Savings</div>
+  <div class="tgrid">
+    <div class="tcard fade-in">“Matched with Dr. Riya in seconds. My back pain eased in 6 sessions and I paid far less than at the clinic.”<b>Ankit S., Gurugram</b></div>
+    <div class="tcard fade-in">“Online sessions for my shoulder fit around my office hours. The recovery tracker kept me motivated.”<b>Neha K., Noida</b></div>
+    <div class="tcard fade-in">“Home visits for my father's post-surgery rehab were a blessing. Transparent pricing, no surprises.”<b>Rohit M., Delhi</b></div>
+  </div></div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background:var(--off-white)">
+  <div class="section-label" style="text-align:center">Help</div>
+  <div class="section-title" style="text-align:center;margin-bottom:40px">Frequently Asked Questions</div>
+  <div class="faq">
+    <details><summary>How does the AI matching work?</summary><p>We score every physiotherapist on specialization fit, rating, distance and your budget, then show your top three.</p></details>
+    <details><summary>Is the symptom checker a diagnosis?</summary><p>No. It gives general triage guidance only. Always consult a qualified physiotherapist or doctor for a diagnosis.</p></details>
+    <details><summary>What does PhysioConnect charge?</summary><p>A flat platform fee of ₹80–100 per session. The physio's fee is shown up-front on every profile.</p></details>
+    <details><summary>Can I cancel a booking?</summary><p>Yes. Open your dashboard from the top-right menu and cancel any upcoming session.</p></details>
+    <details><summary>Where is my data stored?</summary><p>In this demo, accounts, bookings and tracker entries are stored only in your own browser.</p></details>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="text-align:center">
+  <div class="section-label">Contact</div>
+  <div class="section-title">Get in Touch</div>
+  <p class="section-sub" style="margin:0 auto 36px">Questions, feedback, or want to join as a physiotherapist? Write to us.</p>
+  <form class="cform" onsubmit="handleContact(event)">
+    <input id="cName" placeholder="Your name" required>
+    <input id="cEmail" type="email" placeholder="Email address" required>
+    <textarea id="cMsg" placeholder="How can we help?" required></textarea>
+    <button class="btn-primary" type="submit">Send Message →</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:white;margin-bottom:8px">🧠 PhysioConnect</p>
+  <p>AI-Powered Physiotherapy Marketplace · Connecting Patients with New Graduate Physios</p>
+  <p style="margin-top:12px">Built for <strong>B.Tech CSE Capstone Project</strong> · Manav Rachna International Institute of Research and Studies</p>
+  <div class="flinks"><a href="#how-it-works">How it works</a><a href="#physios">Physios</a><a href="#join">Join as Physio</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></div>
+  <p style="margin-top:12px;font-size:0.75rem">© 2026 PhysioConnect. All rights reserved.</p>
+</footer>
+
+<script>
+// ─── CONFIG ──────────────────────────────────────────────────────────────────
+
+// ─── IN-MEMORY STATE ─────────────────────────────────────────────────────────
+let currentUser = null;
+let pendingPhysio = null;
+
+const PHYSIOS = [
+  { id:'p1', name:'Dr. Riya Sharma',  avatar:'R', color:'#0A9688', spec:'Spine & Back Specialist',   rating:4.9, dist:2.4, price:700, fee:80,  type:['home','online'], city:'Delhi' },
+  { id:'p2', name:'Dr. Arjun Mehra',  avatar:'A', color:'#1A2E42', spec:'Sports Rehab Expert',       rating:4.7, dist:3.1, price:650, fee:90,  type:['home','online'], city:'Delhi' },
+  { id:'p3', name:'Dr. Pooja Gupta',  avatar:'P', color:'#26C6A2', spec:'Neurological Rehab',        rating:4.8, dist:4.0, price:800, fee:100, type:['home','online'], city:'Delhi' },
+  { id:'p4', name:'Dr. Kabir Singh',  avatar:'K', color:'#FF6B6B', spec:'Cervical & Shoulder',       rating:4.5, dist:5.2, price:500, fee:80,  type:['online'],        city:'Delhi' },
+  { id:'p5', name:'Dr. Meera Nair',   avatar:'M', color:'#FFB347', spec:'Post-Surgery & Geriatric',  rating:4.9, dist:6.1, price:900, fee:100, type:['home'],          city:'Delhi' },
+];
+
+const BOOKINGS = JSON.parse(localStorage.getItem('pc_bookings') || '[]');
+
+// ─── AUTH ─────────────────────────────────────────────────────────────────────
+const USERS = JSON.parse(localStorage.getItem('pc_users') || '[{"email":"demo@physioconnect.in","pass":"Demo@1234","name":"Demo Patient","city":"Delhi"}]');
+
+function saveUsers() { localStorage.setItem('pc_users', JSON.stringify(USERS)); }
+
+function openAuthModal() { document.getElementById('authModal').classList.add('show'); }
+function closeAuthModal() { document.getElementById('authModal').classList.remove('show'); clearAuthMsg(); }
+
+function switchTab(tab) {
+  document.querySelectorAll('.modal-tab').forEach((t,i)=>t.classList.toggle('active', (i===0&&tab==='login')||(i===1&&tab==='register')));
+  document.getElementById('loginForm').style.display = tab==='login'?'block':'none';
+  document.getElementById('registerForm').style.display = tab==='register'?'block':'none';
+  clearAuthMsg();
+}
+
+function clearAuthMsg() { const m=document.getElementById('authMsg'); m.innerHTML=''; }
+function showAuthMsg(msg,type) { const m=document.getElementById('authMsg'); m.innerHTML=`<div class="modal-msg ${type}">${msg}</div>`; }
+
+function handleLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPass').value;
+  const user  = USERS.find(u=>u.email===email && u.pass===pass);
+  if (!user) { showAuthMsg('❌ Invalid email or password.','error'); return; }
+  loginUser(user);
+}
+
+function handleRegister() {
+  const name  = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass  = document.getElementById('regPass').value;
+  const city  = document.getElementById('regCity').value.trim();
+  if (!name||!email||!pass) { showAuthMsg('Please fill all required fields.','error'); return; }
+  if (pass.length < 6)      { showAuthMsg('Password must be at least 6 characters.','error'); return; }
+  if (USERS.find(u=>u.email===email)) { showAuthMsg('Email already registered.','error'); return; }
+  const newUser = {email,pass,name,city};
+  USERS.push(newUser);
+  saveUsers();
+  loginUser(newUser);
+}
+
+function loginUser(user) {
+  currentUser = user;
+  localStorage.setItem('pc_session', JSON.stringify(user));
+  showAuthMsg(`✅ Welcome, ${user.name}!`,'success');
+  setTimeout(()=>{ closeAuthModal(); updateAuthUI(); showToast(`Welcome back, ${user.name}! 👋`,'success'); },900);
+}
+
+function logout() {
+  currentUser = null;
+  localStorage.removeItem('pc_session');
+  updateAuthUI();
+  showToast('Signed out successfully.','success');
+}
+
+function updateAuthUI() {
+  const area = document.getElementById('authArea');
+  if (currentUser) {
+    const initials = currentUser.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    area.innerHTML = `
+      <button class="user-badge" onclick="showUserMenu()">
+        <div class="user-avatar-small">${initials}</div>
+        ${currentUser.name.split(' ')[0]}
+      </button>`;
+  } else {
+    area.innerHTML = `
+      <button class="nav-login" onclick="openAuthModal()">Sign In</button>
+      <button class="nav-cta" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Find a Physio →</button>`;
+  }
+}
+
+// ─── TOAST ───────────────────────────────────────────────────────────────────
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(()=>t.classList.remove('show'), 3500);
+}
+
+// ─── SYMPTOM CHECKER (AI-Powered) ─────────────────────────────────────────────
+function toggleTag(el) { el.classList.toggle('active'); }
+
+function addCustomSymptom() {
+  const input = document.getElementById('customSymptomInput');
+  const val = input.value.trim();
+  if (!val) return;
+  const container = document.getElementById('symptomTags');
+  const tag = document.createElement('span');
+  tag.className = 'tag active';
+  tag.textContent = val;
+  tag.onclick = function(){ this.classList.toggle('active'); };
+  container.appendChild(tag);
+  input.value = '';
+}
+
+function renderMatchResults(physios, insight) {
+  const cards = document.getElementById('matchCards');
+  cards.innerHTML = physios.map((p,i) => `
+    <div class="physio-card">
+      <div class="physio-avatar" style="background:${p.color}">${p.avatar}</div>
+      <div class="physio-info">
+        <div class="physio-name">${i===0?'🏆 ':''}${p.name}</div>
+        <div class="physio-meta">${p.spec} · ${p.dist}km away · ⭐ ${p.rating} · ₹${p.price}/session</div>
+        <div class="physio-tags">
+          ${p.type.map(t=>`<span class="physio-tag">${t==='home'?'🏠 Home Visit':'💻 Online'}</span>`).join('')}
+          <span class="physio-tag">Platform fee ₹${p.fee}</span>
+        </div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div class="physio-score">${p.score}%<br><span>match</span></div>
+        <button class="book-btn" style="margin-top:8px" onclick="openBookModal('${p.id}','${p.name}')">Book →</button>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('matchInsight').innerHTML = `<strong>🤖 AI Insight:</strong> ${insight}`;
+  const panel = document.getElementById('matchResults');
+  panel.classList.add('show');
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+// ─── BOOKING ──────────────────────────────────────────────────────────────────
+function openBookModal(physioId, physioName) {
+  if (!currentUser) {
+    showToast('Please sign in to book a session.','error');
+    openAuthModal();
+    return;
+  }
+  pendingPhysio = {id:physioId, name:physioName};
+  document.getElementById('bookingPhysioName').textContent = `Booking with ${physioName}`;
+  // Set min date to tomorrow
+  const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate()+1);
+  document.getElementById('bookDate').min = tomorrow.toISOString().split('T')[0];
+  document.getElementById('bookDate').value = tomorrow.toISOString().split('T')[0];
+  document.getElementById('bookMsg').innerHTML = '';
+  document.getElementById('bookModal').classList.add('show');
+}
+
+function closeBookModal() {
+  document.getElementById('bookModal').classList.remove('show');
+  pendingPhysio = null;
+}
+
+
+// ─── PHYSIO DATA ─────────────────────────────────────────────────────────────
+PHYSIOS.push(
+ {id:'p6',name:'Dr. Sana Khan',avatar:'S',color:'#7E57C2',spec:'Orthopaedic & Knee Care',rating:4.6,dist:3.8,price:600,fee:80,type:['home','online'],city:'Delhi'},
+ {id:'p7',name:'Dr. Vikram Rao',avatar:'V',color:'#3949AB',spec:'Posture & Pain Management',rating:4.4,dist:2.9,price:450,fee:80,type:['online','home'],city:'Delhi'});
+const META={
+ p1:{exp:6,tags:['back','spine','sciatica','posture'],bio:'Specialist in disc, sciatica and chronic lower-back pain.'},
+ p2:{exp:5,tags:['sports','acl','knee','ligament'],bio:'Return-to-sport programmes and ligament rehab for athletes.'},
+ p3:{exp:8,tags:['stroke','neuro'],bio:'Stroke, Parkinson’s and neuro-motor recovery specialist.'},
+ p4:{exp:4,tags:['neck','shoulder','cervical'],bio:'Cervical spondylosis, frozen shoulder and desk-posture care.'},
+ p5:{exp:10,tags:['surgery','geriatric','knee'],bio:'Post-operative and elderly home-care rehabilitation.'},
+ p6:{exp:5,tags:['knee','acl','surgery'],bio:'Knee replacement, ACL and joint mobility programmes.'},
+ p7:{exp:3,tags:['back','posture','neck'],bio:'Ergonomics, posture correction and non-drug pain relief.'}};
+PHYSIOS.forEach(p=>Object.assign(p,META[p.id]));
+const COND={'Back Pain':['back','spine'],'ACL / Knee':['knee','acl'],'Stroke Rehabilitation':['stroke','neuro'],'Sports Injury':['sports','acl'],'Post-Surgery':['surgery','geriatric'],'Neck / Shoulder':['neck','shoulder','cervical'],'Other':[]};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtTime=t=>{const[h,m]=t.split(':').map(Number);return `${h%12||12}:${String(m).padStart(2,'0')} ${h<12?'AM':'PM'}`};
+const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+// ─── SYMPTOM ENGINE ──────────────────────────────────────────────────────────
+const KB=[
+ {pri:6,re:/numb|tingl|chest|fever|bladder|bowel|fracture|fall|can.?t move/i,c:'Possible red-flag symptoms',t:'Medical evaluation first, then guided rehab',u:'🚨 Urgent — see a doctor today',s:'After medical clearance',n:'Numbness, chest symptoms, fever or loss of bladder/bowel control can signal conditions that need a doctor before physiotherapy.'},
+ {pri:5,re:/stroke|paraly/i,c:'Post-stroke motor deficit',t:'Neuro-rehab: task-specific training, balance and gait work',u:'🔴 High — start within days',s:'20–40 sessions',n:'Early, intensive rehabilitation gives the best chance of regaining movement. Family involvement in home exercises helps a lot.'},
+ {pri:4,re:/surgery|replacement/i,c:'Post-operative stiffness & weakness',t:'Graded mobilisation and strengthening per surgeon protocol',u:'⚠️ Moderate — start as cleared by surgeon',s:'12–20 sessions',n:'Rehab restores range of motion and strength after surgery. Follow your surgeon’s precautions and progress gradually.'},
+ {pri:3,re:/sport|acl|sprain|ligament|strain/i,c:'Soft-tissue / ligament injury',t:'RICE, progressive loading and return-to-sport drills',u:'⚠️ Moderate — book within 3 days',s:'8–14 sessions',n:'Early protected movement speeds healing. Avoid returning to sport until strength and stability are retested.'},
+ {pri:2,re:/back|sciatica|disc|spine/i,c:'Mechanical low-back pain',t:'Manual therapy, core stability and posture correction',u:'🟡 Mild–Moderate — book within a week',s:'6–10 sessions',n:'Most back pain is muscular or postural and improves with targeted exercise and staying active.'},
+ {pri:2,re:/neck|shoulder|cervical|wrist/i,c:'Cervical / shoulder strain',t:'Mobilisation, stretching and ergonomic correction',u:'🟡 Mild–Moderate — book within a week',s:'6–10 sessions',n:'Prolonged screen posture is a common trigger. Mobility work plus workstation changes usually brings relief.'},
+ {pri:2,re:/knee|joint|hip|ankle/i,c:'Knee / joint overload',t:'Strengthening, gait retraining and load management',u:'🟡 Mild–Moderate — book within a week',s:'8–12 sessions',n:'Strengthening the muscles around the joint reduces pain and protects against further wear.'},
+ {pri:1,re:/mobility|stiff/i,c:'Reduced mobility',t:'Range-of-motion and functional strength programme',u:'🟢 Low — book at your convenience',s:'6–8 sessions',n:'Gentle, consistent movement therapy rebuilds confidence and independence.'}];
+function analyseSymptoms(){
+  const syms=[...document.querySelectorAll('.tag.active')].map(t=>t.textContent);
+  if(!syms.length){showToast('Please select at least one symptom.','error');return;}
+  const btn=document.getElementById('analyseBtn');btn.disabled=true;
+  btn.innerHTML='<span class="loading-dots"><span></span><span></span><span></span></span> Analysing…';
+  sleep(900).then(()=>{
+    const hits=KB.filter(k=>syms.some(s=>k.re.test(s))).sort((a,b)=>b.pri-a.pri);
+    const k=hits[0]||{c:'Musculoskeletal discomfort',t:'Physiotherapy assessment to identify the cause',u:'🟡 Mild — book within a week',s:'4–8 sessions',n:'A hands-on assessment will pin down the cause and set a tailored plan.'};
+    const extra=syms.length>1?` Also noted: ${syms.filter(s=>!k.re||!k.re.test(s)).map(esc).join(', ')||'related symptoms'}.`:'';
+    condition.textContent=k.c;therapy.textContent=k.t;urgency.textContent=k.u;sessions.textContent=k.s;
+    narrative.innerHTML=`<strong>Clinical Note:</strong> ${k.n}${extra}`;
+    disclaimer.textContent='This is general triage guidance, not a diagnosis. Please consult a qualified physiotherapist or doctor.';
+    aiResult.classList.add('show');btn.disabled=false;btn.innerHTML='🧠 Analyse with AI';
+    document.getElementById('matchCondition').value=['Post-Surgery','Stroke Rehabilitation','Sports Injury','Neck / Shoulder','Back Pain'].find(x=>COND[x].some(w=>k.c.toLowerCase().includes(w)||k.t.toLowerCase().includes(w)))||document.getElementById('matchCondition').value;
+  });
+}
+
+// ─── MATCHING ────────────────────────────────────────────────────────────────
+function score(p,cond,max){
+  const spec=COND[cond].some(w=>p.tags.includes(w))?40:15;
+  return Math.min(99,Math.round(spec+((p.rating-1)/4)*25+Math.max(0,1-p.dist/20)*20+(p.price<=max?5:0)+Math.min(p.exp,10)*0.5));
+}
+function runAIMatch(){
+  const cond=matchCondition.value,sess=matchSession.value,loc=matchLocation.value.trim()||'Delhi',bud=matchBudget.value;
+  const max={'Under ₹500':500,'₹500 – ₹800':800,'₹800 – ₹1200':1200}[bud]||9999;
+  const key=sess==='Home Visit'?'home':sess==='Online / Video'?'online':null;
+  const btn=matchBtn;btn.disabled=true;
+  btn.innerHTML='<span class="loading-dots"><span></span><span></span><span></span></span> AI Matching in progress…';
+  sleep(1100).then(()=>{
+    let pool=PHYSIOS.filter(p=>!key||p.type.includes(key)),inBudget=pool.filter(p=>p.price<=max),relaxed=!inBudget.length;
+    if(!relaxed)pool=inBudget;
+    const top=pool.map(p=>({...p,score:score(p,cond,max)})).sort((a,b)=>b.score-a.score).slice(0,3);
+    const b=top[0];
+    renderMatchResults(top,`For <strong>${esc(cond)}</strong> in ${esc(loc)}, <strong>${b.name}</strong> leads at ${b.score}% — ${b.spec.toLowerCase()}, rated ⭐ ${b.rating}, ${b.dist} km away at ₹${b.price}/session.${relaxed?' No one fit your budget exactly, so we show the closest options.':''} Compare fees and formats before booking; ${top.length>1?top[1].name+' is a strong alternative.':'book early for your preferred slot.'}`);
+    btn.disabled=false;btn.innerHTML='🤖 Match Me with a Physio →';
+  });
+}
+
+// ─── DIRECTORY ───────────────────────────────────────────────────────────────
+let FAVS=[];try{FAVS=JSON.parse(localStorage.getItem('pc_favs')||'[]')}catch(e){}
+function toggleFav(id){FAVS=FAVS.includes(id)?FAVS.filter(x=>x!==id):[...FAVS,id];save('pc_favs',FAVS);renderDir();}
+function renderDir(){
+  const q=dSearch.value.toLowerCase(),m=dMode.value,s=dSort.value;
+  const list=PHYSIOS.filter(p=>(!m||p.type.includes(m))&&(p.name+p.spec+p.tags.join(' ')).toLowerCase().includes(q))
+    .sort((a,b)=>s==='price'?a.price-b.price:s==='dist'?a.dist-b.dist:s==='fav'?(FAVS.includes(b.id)-FAVS.includes(a.id))||b.rating-a.rating:b.rating-a.rating);
+  dirGrid.innerHTML=list.map(p=>`<div class="pcard">
+    <button class="fav ${FAVS.includes(p.id)?'on':''}" title="Save" onclick="toggleFav('${p.id}')">♥</button>
+    <div class="physio-avatar" style="background:${p.color}">${p.avatar}</div>
+    <h4>${p.name}</h4><div class="m">${p.spec} · ⭐ ${p.rating} · ${p.exp} yrs · ${p.dist} km</div>
+    <div class="bio">${p.bio}</div>
+    <div class="physio-tags">${p.type.map(t=>`<span class="physio-tag">${t==='home'?'🏠 Home':'💻 Online'}</span>`).join('')}</div>
+    <div class="row"><div class="price">₹${p.price}<small> + ₹${p.fee} fee</small></div><button class="book-btn" onclick="openBookModal('${p.id}','${p.name}')">Book →</button></div></div>`).join('')||'<div class="empty">No physiotherapists match your search.</div>';
+}
+
+// ─── BOOKING ─────────────────────────────────────────────────────────────────
+const _ob=openBookModal;
+openBookModal=function(id,name){
+  _ob(id,name);if(!currentUser)return;
+  const p=PHYSIOS.find(x=>x.id===id);
+  bookType.innerHTML=p.type.map(t=>t==='home'?'<option value="home_visit">🏠 Home Visit</option>':'<option value="online">💻 Online / Video</option>').join('');
+  bookingPhysioName.textContent=`Booking with ${name} · ₹${p.price} + ₹${p.fee} platform fee = ₹${p.price+p.fee}`;
+};
+function submitBooking(){
+  const date=bookDate.value,time=bookTime.value,type=bookType.value,msg=document.getElementById('bookMsg');
+  if(!date){msg.innerHTML='<div class="modal-msg error">Please select a date.</div>';return;}
+  if(BOOKINGS.some(b=>b.physioId===pendingPhysio.id&&b.date===date&&b.time===time&&b.status==='confirmed')){
+    msg.innerHTML='<div class="modal-msg error">That slot is already taken. Please pick another time.</div>';return;}
+  const name=pendingPhysio.name;
+  BOOKINGS.push({id:Date.now().toString(),userEmail:currentUser.email,physioId:pendingPhysio.id,physioName:name,date,time,type,notes:bookNotes.value.trim(),status:'confirmed',createdAt:new Date().toISOString()});
+  save('pc_bookings',BOOKINGS);bookNotes.value='';
+  msg.innerHTML=`<div class="modal-msg success">✅ Confirmed with ${esc(name)} on ${date} at ${fmtTime(time)}.</div>`;
+  bookSubmitBtn.disabled=true;
+  setTimeout(()=>{closeBookModal();showToast(`🎉 Session booked with ${name}!`,'success');bookSubmitBtn.disabled=false;},1600);
+}
+
+// ─── DASHBOARD ───────────────────────────────────────────────────────────────
+const painKey=()=>'pc_pain_'+currentUser.email;
+function showUserMenu(){
+  dashName.textContent=`Hi, ${currentUser.name.split(' ')[0]} 👋`;dashEmail.textContent=currentUser.email;
+  renderDash();dashModal.classList.add('show');
+}
+function closeDash(){dashModal.classList.remove('show');}
+function renderDash(){
+  const mine=BOOKINGS.filter(b=>b.userEmail===currentUser.email).sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));
+  dashBookings.innerHTML=mine.map(b=>`<div class="bk"><div><b>${esc(b.physioName)}</b>${b.date} · ${fmtTime(b.time)} · ${b.type==='online'?'💻 Online':'🏠 Home'}${b.notes?'<br><i>'+esc(b.notes)+'</i>':''}<br><span class="st ${b.status==='confirmed'?'':'x'}">${b.status}</span></div>${b.status==='confirmed'?`<button onclick="cancelBooking('${b.id}')">Cancel</button>`:''}</div>`).join('')||'<p style="font-size:.85rem;color:var(--gray)">No bookings yet — find a physio to get started.</p>';
+  drawPain();
+}
+function cancelBooking(id){
+  if(!confirm('Cancel this booking?'))return;
+  const b=BOOKINGS.find(x=>x.id===id);if(b)b.status='cancelled';
+  save('pc_bookings',BOOKINGS);renderDash();showToast('Booking cancelled.','success');
+}
+function savePain(){
+  let d=[];try{d=JSON.parse(localStorage.getItem(painKey())||'[]')}catch(e){}
+  d.push({t:new Date().toISOString().slice(0,10),v:+painRange.value});save(painKey(),d.slice(-14));drawPain();showToast('Pain level logged.','success');
+}
+function drawPain(){
+  let d=[];try{d=JSON.parse(localStorage.getItem(painKey())||'[]')}catch(e){}
+  if(!d.length){painChart.innerHTML='<p style="font-size:.82rem;color:var(--gray)">Log daily to see your recovery trend.</p>';return;}
+  const W=320,H=90,x=i=>d.length>1?10+i*(W-20)/(d.length-1):W/2,y=v=>H-10-(v-1)*(H-20)/9;
+  painChart.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%"><polyline fill="none" stroke="#0A9688" stroke-width="2.5" points="${d.map((p,i)=>x(i)+','+y(p.v)).join(' ')}"/>${d.map((p,i)=>`<circle cx="${x(i)}" cy="${y(p.v)}" r="4" fill="#26C6A2"/>`).join('')}</svg><p style="font-size:.78rem;color:var(--gray)">Last ${d.length} entries · latest ${d[d.length-1].v}/10${d.length>1?(d[d.length-1].v<d[0].v?' · 📉 improving':' · keep going'):''}</p>`;
+}
+
+// ─── CONTACT / UX ────────────────────────────────────────────────────────────
+function handleContact(e){
+  e.preventDefault();let m=[];try{m=JSON.parse(localStorage.getItem('pc_messages')||'[]')}catch(x){}
+  m.push({name:cName.value,email:cEmail.value,msg:cMsg.value,at:new Date().toISOString()});save('pc_messages',m);
+  e.target.reset();showToast('Message sent — we’ll reply within 24 hours.','success');
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAuthModal();closeBookModal();closeDash();}});
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('mousedown',e=>{if(e.target===o){closeAuthModal();closeBookModal();closeDash();}}));
+['loginEmail','loginPass'].forEach(i=>document.getElementById(i).addEventListener('keydown',e=>{if(e.key==='Enter')handleLogin()}));
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
+try{JSON.parse(localStorage.getItem('pc_physios')||'[]').forEach(p=>PHYSIOS.push(p))}catch(e){}
+function joinPhysio(e){
+  e.preventDefault();
+  const [spec,tags]=jSpec.value.split('|'),name=jName.value.trim();
+  const p={id:'u'+Date.now(),name,avatar:name.replace(/^Dr\.?\s*/i,'').charAt(0).toUpperCase()||'P',color:['#0A9688','#3949AB','#7E57C2','#EF6C00','#2E7D32'][PHYSIOS.length%5],spec,rating:4.5,dist:+(1+Math.random()*7).toFixed(1),price:+jPrice.value,fee:jPrice.value>=800?100:jPrice.value>=600?90:80,type:jMode.value.split(','),city:'Delhi',exp:+jExp.value,tags:tags.split(','),bio:`New on PhysioConnect · ${jExp.value} yrs experience in ${spec.toLowerCase()}.`};
+  let saved=[];try{saved=JSON.parse(localStorage.getItem('pc_physios')||'[]')}catch(x){}
+  saved.push(p);save('pc_physios',saved);PHYSIOS.push(p);renderDir();e.target.reset();
+  showToast('Profile created — you now appear in the directory!','success');
+  document.getElementById('physios').scrollIntoView({behavior:'smooth'});
+}
+renderDir();
+
+// ─── SCROLL ANIMATIONS ────────────────────────────────────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold:0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+(function init() {
+  const saved = localStorage.getItem('pc_session');
+  if (saved) { try { currentUser = JSON.parse(saved); updateAuthUI(); } catch(e){} }
+})();
+</script>
+<script>
+// ─── BACKEND API LAYER (active only when the Node server is reachable) ───────
+(async function(){
+  const T='pc_token';let TOKEN=localStorage.getItem(T);
+  async function api(p,o={}){
+    const r=await fetch('/api'+p,{...o,headers:{'Content-Type':'application/json',...(TOKEN?{Authorization:'Bearer '+TOKEN}:{}),...(o.headers||{})},body:o.body&&JSON.stringify(o.body)});
+    const d=await r.json().catch(()=>({}));if(!r.ok){const e=new Error(d.error||'Request failed');e.status=r.status;throw e;}return d;}
+  try{const h=await fetch('/api/health');if(!(h.ok&&(await h.json()).ok))return;}catch(e){return;}
+  // server mode: replace local data with server data
+  localStorage.removeItem('pc_session');currentUser=null;
+  const reload=async()=>{PHYSIOS.length=0;PHYSIOS.push(...await api('/physios'));};
+  const loadFavs=async()=>{FAVS=TOKEN?await api('/favs').catch(()=>[]):[];};
+  const authed=async res=>{TOKEN=res.token;localStorage.setItem(T,TOKEN);currentUser=res.user;await loadFavs();renderDir();
+    showAuthMsg(`✅ Welcome, ${esc(res.user.name)}!`,'success');
+    setTimeout(()=>{closeAuthModal();updateAuthUI();showToast(`Welcome, ${res.user.name}! 👋`,'success');},700);};
+  const fail=e=>showAuthMsg('❌ '+esc(e.message),'error');
+  handleLogin=()=>api('/auth/login',{method:'POST',body:{email:loginEmail.value,password:loginPass.value}}).then(authed,fail);
+  handleRegister=()=>api('/auth/register',{method:'POST',body:{name:regName.value,email:regEmail.value,password:regPass.value,city:regCity.value}}).then(authed,fail);
+  logout=()=>{TOKEN=null;localStorage.removeItem(T);currentUser=null;FAVS=[];updateAuthUI();renderDir();showToast('Signed out successfully.','success');};
+  toggleFav=async id=>{if(!currentUser){showToast('Sign in to save favourites.','error');return;}
+    try{await api('/favs/'+id,{method:'POST'});await loadFavs();renderDir();}catch(e){showToast(e.message,'error');}};
+  submitBooking=async()=>{
+    const date=bookDate.value,msg=document.getElementById('bookMsg');
+    if(!date){msg.innerHTML='<div class="modal-msg error">Please select a date.</div>';return;}
+    bookSubmitBtn.disabled=true;
+    try{const b=await api('/bookings',{method:'POST',body:{physioId:pendingPhysio.id,date,time:bookTime.value,type:bookType.value,notes:bookNotes.value.trim()}});
+      bookNotes.value='';msg.innerHTML=`<div class="modal-msg success">✅ Confirmed with ${esc(b.physioName)} on ${b.date} at ${fmtTime(b.time)}.</div>`;
+      setTimeout(()=>{closeBookModal();showToast(`🎉 Session booked with ${b.physioName}!`,'success');bookSubmitBtn.disabled=false;},1500);
+    }catch(e){if(e.status===401){logout();closeBookModal();openAuthModal&&openAuthModal('login');}
+      msg.innerHTML=`<div class="modal-msg error">${esc(e.message)}</div>`;bookSubmitBtn.disabled=false;}};
+  let PAIN=[];
+  renderDash=async()=>{
+    try{const mine=await api('/bookings');PAIN=await api('/pain');
+      dashBookings.innerHTML=mine.map(b=>`<div class="bk"><div><b>${esc(b.physioName)}</b>${b.date} · ${fmtTime(b.time)} · ${b.type==='online'?'💻 Online':'🏠 Home'}${b.notes?'<br><i>'+esc(b.notes)+'</i>':''}<br><span class="st ${b.status==='confirmed'?'':'x'}">${b.status}</span></div>${b.status==='confirmed'?`<button onclick="cancelBooking('${b.id}')">Cancel</button>`:''}</div>`).join('')||'<p style="font-size:.85rem;color:var(--gray)">No bookings yet — find a physio to get started.</p>';
+      drawPain();}catch(e){if(e.status===401){closeDash();logout();}}};
+  cancelBooking=async id=>{if(!confirm('Cancel this booking?'))return;
+    try{await api('/bookings/'+id,{method:'DELETE'});renderDash();showToast('Booking cancelled.','success');}catch(e){showToast(e.message,'error');}};
+  savePain=async()=>{try{await api('/pain',{method:'POST',body:{v:+painRange.value}});await renderDash();showToast('Pain level logged.','success');}catch(e){showToast(e.message,'error');}};
+  drawPain=()=>{const d=PAIN;
+    if(!d.length){painChart.innerHTML='<p style="font-size:.82rem;color:var(--gray)">Log daily to see your recovery trend.</p>';return;}
+    const W=320,H=90,x=i=>d.length>1?10+i*(W-20)/(d.length-1):W/2,y=v=>H-10-(v-1)*(H-20)/9;
+    painChart.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%"><polyline fill="none" stroke="#0A9688" stroke-width="2.5" points="${d.map((p,i)=>x(i)+','+y(p.v)).join(' ')}"/>${d.map((p,i)=>`<circle cx="${x(i)}" cy="${y(p.v)}" r="4" fill="#26C6A2"/>`).join('')}</svg><p style="font-size:.78rem;color:var(--gray)">Last ${d.length} entries · latest ${d[d.length-1].v}/10${d.length>1?(d[d.length-1].v<d[0].v?' · 📉 improving':' · keep going'):''}</p>`;};
+  handleContact=async e=>{e.preventDefault();const f=e.target;
+    try{await api('/contact',{method:'POST',body:{name:cName.value,email:cEmail.value,msg:cMsg.value}});f.reset();showToast('Message sent — we’ll reply within 24 hours.','success');}catch(x){showToast(x.message,'error');}};
+  joinPhysio=async e=>{e.preventDefault();
+    if(!currentUser){showToast('Please sign in first to create a physio profile.','error');openAuthModal&&openAuthModal('login');return;}
+    const [spec,tags]=jSpec.value.split('|');
+    try{await api('/physios',{method:'POST',body:{name:jName.value,spec,tags:tags.split(','),price:+jPrice.value,exp:+jExp.value,type:jMode.value.split(',')}});
+      e.target.reset();await reload();renderDir();showToast('Profile created — you now appear in the directory!','success');
+      document.getElementById('physios').scrollIntoView({behavior:'smooth'});}catch(x){showToast(x.message,'error');}};
+  try{await reload();if(TOKEN){try{currentUser=await api('/me');await loadFavs();}catch(e){TOKEN=null;localStorage.removeItem(T);}}
+    renderDir();updateAuthUI();}catch(e){}
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+[
+ {
+  "id": "p1",
+  "name": "Dr. Riya Sharma",
+  "avatar": "R",
+  "color": "#0A9688",
+  "spec": "Spine & Back Specialist",
+  "rating": 4.9,
+  "dist": 2.4,
+  "price": 700,
+  "fee": 80,
+  "type": [
+   "home",
+   "online"
+  ],
+  "city": "Delhi",
+  "exp": 6,
+  "tags": [
+   "back",
+   "spine",
+   "sciatica",
+   "posture"
+  ],
+  "bio": "Specialist in disc, sciatica and chronic lower-back pain."
+ },
+ {
+  "id": "p2",
+  "name": "Dr. Arjun Mehra",
+  "avatar": "A",
+  "color": "#1A2E42",
+  "spec": "Sports Rehab Expert",
+  "rating": 4.7,
+  "dist": 3.1,
+  "price": 650,
+  "fee": 90,
+  "type": [
+   "home",
+   "online"
+  ],
+  "city": "Delhi",
+  "exp": 5,
+  "tags": [
+   "sports",
+   "acl",
+   "knee",
+   "ligament"
+  ],
+  "bio": "Return-to-sport programmes and ligament rehab for athletes."
+ },
+ {
+  "id": "p3",
+  "name": "Dr. Pooja Gupta",
+  "avatar": "P",
+  "color": "#26C6A2",
+  "spec": "Neurological Rehab",
+  "rating": 4.8,
+  "dist": 4,
+  "price": 800,
+  "fee": 100,
+  "type": [
+   "home",
+   "online"
+  ],
+  "city": "Delhi",
+  "exp": 8,
+  "tags": [
+   "stroke",
+   "neuro"
+  ],
+  "bio": "Stroke, Parkinson\u2019s and neuro-motor recovery specialist."
+ },
+ {
+  "id": "p4",
+  "name": "Dr. Kabir Singh",
+  "avatar": "K",
+  "color": "#FF6B6B",
+  "spec": "Cervical & Shoulder",
+  "rating": 4.5,
+  "dist": 5.2,
+  "price": 500,
+  "fee": 80,
+  "type": [
+   "online"
+  ],
+  "city": "Delhi",
+  "exp": 4,
+  "tags": [
+   "neck",
+   "shoulder",
+   "cervical"
+  ],
+  "bio": "Cervical spondylosis, frozen shoulder and desk-posture care."
+ },
+ {
+  "id": "p5",
+  "name": "Dr. Meera Nair",
+  "avatar": "M",
+  "color": "#FFB347",
+  "spec": "Post-Surgery & Geriatric",
+  "rating": 4.9,
+  "dist": 6.1,
+  "price": 900,
+  "fee": 100,
+  "type": [
+   "home"
+  ],
+  "city": "Delhi",
+  "exp": 10,
+  "tags": [
+   "surgery",
+   "geriatric",
+   "knee"
+  ],
+  "bio": "Post-operative and elderly home-care rehabilitation."
+ },
+ {
+  "id": "p6",
+  "name": "Dr. Sana Khan",
+  "avatar": "S",
+  "color": "#7E57C2",
+  "spec": "Orthopaedic & Knee Care",
+  "rating": 4.6,
+  "dist": 3.8,
+  "price": 600,
+  "fee": 80,
+  "type": [
+   "home",
+   "online"
+  ],
+  "city": "Delhi",
+  "exp": 5,
+  "tags": [
+   "knee",
+   "acl",
+   "surgery"
+  ],
+  "bio": "Knee replacement, ACL and joint mobility programmes."
+ },
+ {
+  "id": "p7",
+  "name": "Dr. Vikram Rao",
+  "avatar": "V",
+  "color": "#3949AB",
+  "spec": "Posture & Pain Management",
+  "rating": 4.4,
+  "dist": 2.9,
+  "price": 450,
+  "fee": 80,
+  "type": [
+   "online",
+   "home"
+  ],
+  "city": "Delhi",
+  "exp": 3,
+  "tags": [
+   "back",
+   "posture",
+   "neck"
+  ],
+  "bio": "Ergonomics, posture correction and non-drug pain relief."
+ }
+]
